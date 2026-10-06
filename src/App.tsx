@@ -1944,6 +1944,24 @@ const STATUS_OPTS = [
   { value: "Inactive", label: "Inactive" },
 ];
 
+const TRAINING_REGION_NAME_OPTS = [
+  { value: "Ayeyarwady", label: "Ayeyarwady" },
+  { value: "Bago", label: "Bago" },
+  { value: "Chin State", label: "Chin State" },
+  { value: "Kachin State", label: "Kachin State" },
+  { value: "Kayah State", label: "Kayah State" },
+  { value: "Kayin State", label: "Kayin State" },
+  { value: "Magway", label: "Magway" },
+  { value: "Mandalay", label: "Mandalay" },
+  { value: "Mon State", label: "Mon State" },
+  { value: "Naypyidaw", label: "Naypyidaw" },
+  { value: "Rakhine State", label: "Rakhine State" },
+  { value: "Sagaing", label: "Sagaing" },
+  { value: "Shan State", label: "Shan State" },
+  { value: "Tanintharyi", label: "Tanintharyi" },
+  { value: "Yangon", label: "Yangon" },
+];
+
 const ACTIVITY_STATUS_OPTS = [
   { value: "Active", label: "Active" },
   { value: "Closed", label: "Closed" },
@@ -10558,10 +10576,17 @@ export default function StudentManagementPortal() {
                 />
               </Field>
               <Field label="Training Region Name">
-                <TextInput
+                <Select
                   value={form.name || ""}
                   onChange={(v) => setField("name", v)}
-                  placeholder="e.g. Yangon"
+                  options={[
+                    { value: "", label: "Select training region" },
+                    ...(form.name &&
+                    !TRAINING_REGION_NAME_OPTS.some((o) => o.value === form.name)
+                      ? [{ value: form.name, label: form.name }]
+                      : []),
+                    ...TRAINING_REGION_NAME_OPTS,
+                  ]}
                 />
               </Field>
               <Field label="Description">
