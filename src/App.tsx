@@ -25,15 +25,42 @@ import {
   useCanvasState,
 } from "cursor/canvas";
 
-const BRAND = "#002c76";
+/** Virya Design System tokens — KBZ Bank light mode */
+const VIRYA = {
+  primary: "#002c76",
+  primaryHover: "#012460",
+  primarySoft: "#e1ecfe",
+  secondary: "#b51f26",
+  secondaryHover: "#911218",
+  success: "#008a00",
+  warning: "#d28107",
+  critical: "#b30909",
+  info: "#0b7ad5",
+  canvas: "#fafafa",
+  surface: "#fdfdfd",
+  border: "#e6e6e6",
+  borderStrong: "#b0b0b0",
+  ink: "#1a1a1a",
+  textSecondary: "#666666",
+  disabledBg: "#f5f5f5",
+  textOnFill: "#fdfdfd",
+  menuHover: "#f0f5ff",
+  menuSelected: "#f5f5f5",
+  radiusSm: 4,
+  radiusMd: 8,
+  radiusLg: 16,
+  chipRadius: 9999,
+} as const;
+
+const BRAND = VIRYA.primary;
 const FONT = "Poppins, system-ui, sans-serif";
-const WHITE = "#ffffff";
-const PAGE = "#F5F7FA";
-const SOFT = "#E8F1FF";
-const LINE = "#EEF1F6";
-const MUTED = "#6B7280";
-const INK = "#1B2430";
-const SUCCESS = "#1F8A65";
+const WHITE = VIRYA.surface;
+const PAGE = VIRYA.canvas;
+const SOFT = VIRYA.primarySoft;
+const LINE = VIRYA.border;
+const MUTED = VIRYA.textSecondary;
+const INK = VIRYA.ink;
+const SUCCESS = VIRYA.success;
 const t = canvasTokensLight;
 
 function Table({
@@ -76,6 +103,7 @@ function Table({
 
 const MASTER_TITLES = [
   "SA Batch",
+  "Training Region",
   "Certificate Category",
 ];
 
@@ -411,6 +439,7 @@ type PageId =
   | "dash-fame"
   | "dash-usage"
   | "sa-batch"
+  | "training-region"
   | "certificate-category";
 
 type ModalMode =
@@ -642,6 +671,11 @@ type MasterItem = {
   name: string;
   extra: string;
   status: string;
+  description?: string;
+  createdAt?: string;
+  createdBy?: string;
+  updatedAt?: string;
+  updatedBy?: string;
 };
 
 type JoinStatus = "Pending" | "Approved" | "Rejected" | "Cancelled";
@@ -687,7 +721,7 @@ const JOIN_TABS: { id: JoinStatus; label: string }[] = [
 const SEED_STUDENTS: Student[] = [
   {
     id: "s1",
-    studentId: "SA-2026-001",
+    studentId: "SA-001260001",
     name: "Aye Chan Moe",
     college: "University of Yangon",
     region: "Yangon",
@@ -734,7 +768,7 @@ const SEED_STUDENTS: Student[] = [
   },
   {
     id: "s2",
-    studentId: "SA-2026-002",
+    studentId: "SA-001260002",
     name: "Min Khant Kyaw",
     college: "Yangon Technological University",
     region: "Yangon",
@@ -772,7 +806,7 @@ const SEED_STUDENTS: Student[] = [
   },
   {
     id: "s3",
-    studentId: "SA-2026-003",
+    studentId: "SA-002250001",
     name: "Su Myat Hnin",
     college: "University of Mandalay",
     region: "Mandalay",
@@ -810,7 +844,7 @@ const SEED_STUDENTS: Student[] = [
   },
   {
     id: "s4",
-    studentId: "SA-2026-004",
+    studentId: "SA-001260003",
     name: "Thura Aung",
     college: "Dagon University",
     region: "Yangon",
@@ -829,7 +863,7 @@ const SEED_STUDENTS: Student[] = [
     major: "Business Administration",
     graduation: "2028-03-30",
     status: "Blacklist",
-    avatar: avatarDataUri("Thura Aung", "#C62828"),
+    avatar: avatarDataUri("Thura Aung", VIRYA.secondary),
     employment: [
       {
         id: "emp-s4-1",
@@ -848,7 +882,7 @@ const SEED_STUDENTS: Student[] = [
   },
   {
     id: "s5",
-    studentId: "SA-2026-005",
+    studentId: "SA-001250001",
     name: "Khin Htet Htet",
     college: "University of Computer Studies, Yangon",
     region: "Yangon",
@@ -895,7 +929,7 @@ const SEED_STUDENTS: Student[] = [
   },
   {
     id: "s6",
-    studentId: "SA-2026-006",
+    studentId: "SA-001260004",
     name: "Zwe Yan Naing",
     college: "University of Medicine 1, Yangon",
     region: "Yangon",
@@ -1382,7 +1416,7 @@ const SEED_CANDIDATES: JobCandidate[] = [
 const SEED_KPI: KpiRow[] = [
   {
     id: "k1",
-    studentId: "SA-2026-001",
+    studentId: "SA-001260001",
     name: "Aye Chan Moe",
     phone: "09 250 441 102",
     college: "University of Yangon",
@@ -1395,7 +1429,7 @@ const SEED_KPI: KpiRow[] = [
   },
   {
     id: "k2",
-    studentId: "SA-2026-002",
+    studentId: "SA-001260002",
     name: "Min Khant Kyaw",
     phone: "09 421 883 190",
     college: "Yangon Technological University",
@@ -1408,7 +1442,7 @@ const SEED_KPI: KpiRow[] = [
   },
   {
     id: "k3",
-    studentId: "SA-2026-003",
+    studentId: "SA-002250001",
     name: "Su Myat Hnin",
     phone: "09 797 221 045",
     college: "University of Mandalay",
@@ -1421,7 +1455,7 @@ const SEED_KPI: KpiRow[] = [
   },
   {
     id: "k4",
-    studentId: "SA-2026-004",
+    studentId: "SA-001260003",
     name: "Thura Aung",
     phone: "09 254 019 773",
     college: "Dagon University",
@@ -1434,7 +1468,7 @@ const SEED_KPI: KpiRow[] = [
   },
   {
     id: "k5",
-    studentId: "SA-2026-005",
+    studentId: "SA-001250001",
     name: "Khin Htet Htet",
     phone: "09 969 330 218",
     college: "University of Computer Studies, Yangon",
@@ -1447,7 +1481,7 @@ const SEED_KPI: KpiRow[] = [
   },
   {
     id: "k6",
-    studentId: "SA-2026-006",
+    studentId: "SA-001260004",
     name: "Zwe Yan Naing",
     phone: "09 431 667 904",
     college: "University of Medicine 1, Yangon",
@@ -1463,7 +1497,7 @@ const SEED_KPI: KpiRow[] = [
 const SEED_FAME: Fame[] = [
   {
     id: "f1",
-    studentId: "SA-2026-003",
+    studentId: "SA-002250001",
     name: "Su Myat Hnin",
     college: "University of Mandalay",
     batch: "Batch 5",
@@ -1477,7 +1511,7 @@ const SEED_FAME: Fame[] = [
   },
   {
     id: "f2",
-    studentId: "SA-2026-005",
+    studentId: "SA-001250001",
     name: "Khin Htet Htet",
     college: "University of Computer Studies, Yangon",
     batch: "Batch 5",
@@ -1491,7 +1525,7 @@ const SEED_FAME: Fame[] = [
   },
   {
     id: "f3",
-    studentId: "SA-2026-001",
+    studentId: "SA-001260001",
     name: "Aye Chan Moe",
     college: "University of Yangon",
     batch: "Batch 6",
@@ -1505,7 +1539,7 @@ const SEED_FAME: Fame[] = [
   },
   {
     id: "f4",
-    studentId: "SA-2026-002",
+    studentId: "SA-001260002",
     name: "Min Khant Kyaw",
     college: "Yangon Technological University",
     batch: "Batch 6",
@@ -1723,7 +1757,7 @@ const SEED_ACTIVITY: ActivityLog[] = [
     user: "Program Admin",
     module: "Student Record",
     action: "Update",
-    record: "SA-2026-004 Thura Aung",
+    record: "SA-001260003 Thura Aung",
     detail: "Status changed from Active to Blacklist.",
   },
   {
@@ -1768,7 +1802,7 @@ const SEED_ACTIVITY: ActivityLog[] = [
     user: "Program Admin",
     module: "Student Record",
     action: "Update",
-    record: "SA-2026-006 Zwe Yan Naing",
+    record: "SA-001260004 Zwe Yan Naing",
     detail: "Updated contact phone number.",
   },
   {
@@ -1799,11 +1833,61 @@ const SEED_BATCHES: MasterItem[] = [
 ];
 
 const SEED_REGIONS: MasterItem[] = [
-  { id: "r1", name: "Yangon", extra: "YGN", status: "Active" },
-  { id: "r2", name: "Mandalay", extra: "MDY", status: "Active" },
-  { id: "r3", name: "Naypyidaw", extra: "NPT", status: "Active" },
-  { id: "r4", name: "Ayeyarwady", extra: "AYY", status: "Active" },
-  { id: "r5", name: "Shan State", extra: "SHN", status: "Active" },
+  {
+    id: "r1",
+    name: "Yangon",
+    extra: "001",
+    description: "Yangon Region training coverage",
+    status: "Active",
+    createdAt: "2025-11-01 09:00",
+    createdBy: "Program Admin",
+    updatedAt: "2026-03-12 10:15",
+    updatedBy: "Program Admin",
+  },
+  {
+    id: "r2",
+    name: "Mandalay",
+    extra: "002",
+    description: "Mandalay Region training coverage",
+    status: "Active",
+    createdAt: "2025-11-01 09:00",
+    createdBy: "Program Admin",
+    updatedAt: "2026-03-12 10:15",
+    updatedBy: "Program Admin",
+  },
+  {
+    id: "r3",
+    name: "Naypyidaw",
+    extra: "003",
+    description: "Naypyidaw Union Territory training coverage",
+    status: "Active",
+    createdAt: "2025-11-01 09:00",
+    createdBy: "Program Admin",
+    updatedAt: "2026-03-12 10:15",
+    updatedBy: "Program Admin",
+  },
+  {
+    id: "r4",
+    name: "Ayeyarwady",
+    extra: "004",
+    description: "Ayeyarwady Region training coverage",
+    status: "Active",
+    createdAt: "2025-11-01 09:00",
+    createdBy: "Program Admin",
+    updatedAt: "2026-03-12 10:15",
+    updatedBy: "Program Admin",
+  },
+  {
+    id: "r5",
+    name: "Shan State",
+    extra: "005",
+    description: "Shan State training coverage",
+    status: "Active",
+    createdAt: "2025-11-01 09:00",
+    createdBy: "Program Admin",
+    updatedAt: "2026-03-12 10:15",
+    updatedBy: "Program Admin",
+  },
 ];
 
 const SEED_CERT_CATS: MasterItem[] = [
@@ -1827,10 +1911,14 @@ const PROGRAM_NAV: { id: PageId; label: string; icon: string }[] = [
   { id: "schools", label: "Partner School", icon: "school" },
 ];
 
+const SHOW_JOB_MANAGEMENT = false;
+
 const ANNOUNCE_NAV: { id: PageId; label: string; icon: string }[] = [
   { id: "events", label: "Event Management", icon: "calendar" },
   { id: "volunteers", label: "Volunteer Management", icon: "heart" },
-  { id: "jobs", label: "Job Management", icon: "briefcase" },
+  ...(SHOW_JOB_MANAGEMENT
+    ? [{ id: "jobs" as PageId, label: "Job Management", icon: "briefcase" }]
+    : []),
 ];
 
 const SHOW_ACTIVITY_LOG = false;
@@ -1847,6 +1935,7 @@ const PROGRAM_NAV_AFTER: { id: PageId; label: string; icon: string }[] = [
 
 const MASTER_NAV: { id: PageId; label: string; icon: string }[] = [
   { id: "sa-batch", label: "SA Batch", icon: "layers" },
+  { id: "training-region", label: "Training Region", icon: "map" },
   { id: "certificate-category", label: "Certificate Category", icon: "badge" },
 ];
 
@@ -2237,10 +2326,43 @@ function StudentAvatar({
   );
 }
 
-function nextStudentId(rows: Student[]) {
-  const nums = rows.map((r) => Number(r.studentId.split("-").pop() || "0"));
+function regionCodeFor(regionName: string, regions: MasterItem[]) {
+  const match = regions.find((r) => r.name === regionName);
+  const digits = (match?.extra || "").replace(/\D/g, "");
+  return (digits || "000").padStart(3, "0").slice(-3);
+}
+
+function batchCodeFor(batchName: string, batches: MasterItem[]) {
+  const match = batches.find((b) => b.name === batchName);
+  const year = (match?.extra || "").replace(/\D/g, "");
+  if (year.length >= 2) return year.slice(-2);
+  const fromName = (batchName || "").replace(/\D/g, "");
+  return (fromName || "00").padStart(2, "0").slice(-2);
+}
+
+function saIdPrefix(
+  regionName: string,
+  batchName: string,
+  regions: MasterItem[],
+  batches: MasterItem[],
+) {
+  return `SA-${regionCodeFor(regionName, regions)}${batchCodeFor(batchName, batches)}`;
+}
+
+/** Format: SA-{region code}{batch year}{serial} e.g. SA-001260001 */
+function nextStudentId(
+  rows: Student[],
+  regionName: string,
+  batchName: string,
+  regions: MasterItem[],
+  batches: MasterItem[],
+) {
+  const prefix = saIdPrefix(regionName, batchName, regions, batches);
+  const nums = rows
+    .filter((r) => r.studentId.startsWith(prefix))
+    .map((r) => Number(r.studentId.slice(prefix.length) || "0"));
   const n = Math.max(0, ...nums) + 1;
-  return `SA-2026-${String(n).padStart(3, "0")}`;
+  return `${prefix}${String(n).padStart(4, "0")}`;
 }
 
 function nextPartnerSchoolId(rows: School[]) {
@@ -2285,10 +2407,12 @@ function downloadCsv(filename: string, content: string) {
 }
 
 const STUDENT_TEMPLATE =
-  "SA ID,Student Name,College Name,Training Region,Township,City,SA Batch,Gender,Age,Date of Birth,Pay Phone Number,Contact Phone Number,Email,Education,Major,Expected Graduation Date,Current Address,Permanent Address,Status\nSA-2026-000,Sample Ambassador,University of Yangon,Yangon,Kamayut,Yangon,Batch 6,Female,21,2005-01-01,09 000 000 000,09 000 000 001,sample.sa@uy.edu.mm,Bachelor,International Relations,2027-05-15,No. 1 Sample Street,No. 2 Hometown Street,Active\n";
+  "Student Name,College Name,Training Region,Township,City,SA Batch,Gender,Age,Date of Birth,Pay Phone Number,Contact Phone Number,Email,Education,Major,Expected Graduation Date,Current Address,Permanent Address,Status\nSample Ambassador,University of Yangon,Yangon,Kamayut,Yangon,Batch 6,Female,21,2005-01-01,09 000 000 000,09 000 000 001,sample.sa@uy.edu.mm,Bachelor,International Relations,2027-05-15,No. 1 Sample Street,No. 2 Hometown Street,Active\n";
+
+const STUDENT_UPDATE_TEMPLATE =
+  "SA ID,Student Name,College Name,Training Region,Township,City,SA Batch,Gender,Age,Date of Birth,Pay Phone Number,Contact Phone Number,Email,Education,Major,Expected Graduation Date,Current Address,Permanent Address,Status\nSA-001260001,Aye Chan Moe,University of Yangon,Yangon,Kamayut,Yangon,Batch 6,Female,21,2005-03-14,09 250 441 102,09 250 441 199,ayechan.moe@uy.edu.mm,Bachelor,International Relations,2027-05-15,No. 12 Inya Road,45 Baho Road,Active\n";
 
 const STUDENT_IMPORT_REQUIRED = [
-  "SA ID",
   "Student Name",
   "College Name",
   "Training Region",
@@ -2309,11 +2433,21 @@ const STUDENT_IMPORT_REQUIRED = [
   "Status",
 ] as const;
 
+const STUDENT_UPDATE_REQUIRED = ["SA ID", ...STUDENT_IMPORT_REQUIRED] as const;
+
 const STUDENT_IMPORT_NOTES = [
   "Only Excel files are supported.",
-  "Student ID must be unique.",
+  "SA ID is system-generated (region code + batch year + serial), e.g. SA-001260001.",
   "Required columns must not be empty.",
   "Duplicate records will be skipped.",
+  "Invalid rows will appear in the Import result.",
+];
+
+const STUDENT_UPDATE_NOTES = [
+  "Only Excel files are supported.",
+  "SA ID is required to match an existing student.",
+  "Required columns must not be empty.",
+  "Rows with unknown SA IDs will fail.",
   "Invalid rows will appear in the Import result.",
 ];
 
@@ -2415,6 +2549,8 @@ function importCellValue(
 function importStudentRows(
   text: string,
   existingStudents: Student[],
+  regions: MasterItem[],
+  batches: MasterItem[],
 ): StudentImportResult {
   const rows = parseCsvRows(text);
   if (rows.length < 2) {
@@ -2463,11 +2599,11 @@ function importStudentRows(
   const invalidRows: StudentImportInvalidRow[] = [];
   let skipped = 0;
   let fail = 0;
+  const pool: Student[] = [...existingStudents];
 
   for (let i = 1; i < rows.length; i += 1) {
     const cells = rows[i];
     const rowNumber = i + 1;
-    const studentId = importCellValue(cells, columnMap, "SA ID");
     const name = importCellValue(cells, columnMap, "Student Name");
     const college = importCellValue(cells, columnMap, "College Name");
     const region = importCellValue(cells, columnMap, "Training Region");
@@ -2506,12 +2642,13 @@ function importStudentRows(
       fail += 1;
       invalidRows.push({
         row: rowNumber,
-        studentId: studentId || "—",
+        studentId: "—",
         reason: `Required columns empty: ${emptyRequired.join(", ")}.`,
       });
       continue;
     }
 
+    const studentId = nextStudentId(pool, region, batch, regions, batches);
     const normalizedId = studentId.toLowerCase();
     if (existingIds.has(normalizedId) || seenIds.has(normalizedId)) {
       skipped += 1;
@@ -2519,7 +2656,7 @@ function importStudentRows(
     }
 
     seenIds.add(normalizedId);
-    accepted.push({
+    const row: Student = {
       id: uid("s"),
       studentId,
       name,
@@ -2543,7 +2680,9 @@ function importStudentRows(
       avatar: avatarDataUri(name, BRAND),
       employment: [],
       ...stampAudit({}, false),
-    });
+    };
+    accepted.push(row);
+    pool.push(row);
   }
 
   return {
@@ -2579,7 +2718,7 @@ function updateStudentRows(
   }
 
   const columnMap = studentImportColumnMap(rows[0]);
-  const missingColumns = STUDENT_IMPORT_REQUIRED.filter(
+  const missingColumns = STUDENT_UPDATE_REQUIRED.filter(
     (column) => columnMap[column] === undefined,
   );
   if (missingColumns.length > 0) {
@@ -2646,7 +2785,7 @@ function updateStudentRows(
     );
     const status = importCellValue(cells, columnMap, "Status");
 
-    const emptyRequired = STUDENT_IMPORT_REQUIRED.filter(
+    const emptyRequired = STUDENT_UPDATE_REQUIRED.filter(
       (column) => importCellValue(cells, columnMap, column) === "",
     );
     if (emptyRequired.length > 0) {
@@ -2727,7 +2866,7 @@ function formatStudentImportResult(result: StudentImportResult) {
 }
 
 const KPI_TEMPLATE =
-  "Student ID,Student Name,Contact Number,College Name,Attendance,Operation Performance,Onboarding,Social Media,Assignment,Total KPI (%)\nSA-2026-001,Aye Chan Moe,09 250 441 102,University of Yangon,96,88,92,85,90,90\n";
+  "Student ID,Student Name,Contact Number,College Name,Attendance,Operation Performance,Onboarding,Social Media,Assignment,Total KPI (%)\nSA-001260001,Aye Chan Moe,09 250 441 102,University of Yangon,96,88,92,85,90,90\n";
 
 function TemplateButton({
   filename,
@@ -2771,22 +2910,22 @@ function StatusMark({ value }: { value: string; key?: string }) {
   const expired = value === "Expired";
   const on = value === "Active";
   const bg = blocked
-    ? "#FDECEC"
+    ? "#fde8e8"
     : cancelled
-      ? "#FDECEC"
+      ? "#fde8e8"
       : closed
-        ? "#FFF4E5"
+        ? "#fff4e5"
         : expired
-          ? "#F3F4F6"
+          ? VIRYA.disabledBg
           : on
             ? SOFT
-            : "#F3F4F6";
+            : VIRYA.disabledBg;
   const color = blocked
-    ? "#C62828"
+    ? VIRYA.secondary
     : cancelled
-      ? "#C62828"
+      ? VIRYA.secondary
       : closed
-        ? "#E65100"
+        ? VIRYA.warning
         : expired
           ? MUTED
           : on
@@ -2804,7 +2943,7 @@ function StatusMark({ value }: { value: string; key?: string }) {
       style={{
         display: "inline-block",
         padding: "3px 10px",
-        borderRadius: 999,
+        borderRadius: VIRYA.chipRadius,
         fontFamily: FONT,
         fontSize: 11,
         fontWeight: 600,
@@ -2959,17 +3098,23 @@ function BrandButton({
         gap: withPlus ? 8 : 0,
         height: 34,
         padding: "0 14px",
-        borderRadius: 6,
-        background: "#002c76",
-        color: WHITE,
+        borderRadius: VIRYA.radiusMd,
+        background: disabled ? VIRYA.disabledBg : VIRYA.primary,
+        color: disabled ? VIRYA.borderStrong : VIRYA.textOnFill,
         fontFamily: FONT,
         fontSize: 13,
         fontWeight: 600,
         cursor: disabled ? "not-allowed" : "pointer",
-        opacity: disabled ? 0.5 : 1,
+        opacity: 1,
       }}
     >
-      {withPlus ? <LineIcon name="plus" color={WHITE} size={15} /> : null}
+      {withPlus ? (
+        <LineIcon
+          name="plus"
+          color={disabled ? VIRYA.borderStrong : VIRYA.textOnFill}
+          size={15}
+        />
+      ) : null}
       {children}
     </div>
   );
@@ -2991,6 +3136,7 @@ function NavItem({
 }) {
   return (
     <div
+      className={active ? "sa-nav-item sa-nav-active" : "sa-nav-item"}
       onClick={onClick}
       style={{
         position: "relative",
@@ -3004,7 +3150,7 @@ function NavItem({
         color: active ? BRAND : MUTED,
         background: active ? SOFT : "transparent",
         padding: indent ? "8px 12px 8px 36px" : "8px 12px",
-        borderRadius: 8,
+        borderRadius: VIRYA.radiusMd,
         cursor: "pointer",
       }}
     >
@@ -3381,7 +3527,7 @@ function PageIntro({
         {actions}
       </Row>
       <Text size="small" tone="secondary" style={{ color: MUTED, fontFamily: FONT }}>
-        KBZPay SA &gt; {section} &gt; {title}
+        KBZPay SA / {section} / {title}
       </Text>
     </Stack>
   );
@@ -4465,8 +4611,8 @@ function MiniAction({
         fontSize: 12,
         fontWeight: 600,
         cursor: "pointer",
-        background: primary ? BRAND : kind === "reject" ? "#FDECEC" : "#F3F4F6",
-        color: primary ? WHITE : kind === "reject" ? "#C62828" : MUTED,
+        background: primary ? BRAND : kind === "reject" ? "#fde8e8" : VIRYA.disabledBg,
+        color: primary ? WHITE : kind === "reject" ? VIRYA.secondary : MUTED,
       }}
     >
       {label}
@@ -4656,8 +4802,8 @@ function EmploymentTable({
                     <IconActionBtn
                       name="trash"
                       label="Delete"
-                      color="#C62828"
-                      bg="#FDECEC"
+                      color={VIRYA.secondary}
+                      bg="#fde8e8"
                       onClick={() => onDelete(emp)}
                     />
                   ) : null}
@@ -4672,14 +4818,14 @@ function EmploymentTable({
 
 export default function StudentManagementPortal() {
   const [page, setPage] = useCanvasState<PageId>("page", "students");
-  if (
-    (page as string) === "award-category" ||
-    (page as string) === "training-region"
-  ) {
+  if ((page as string) === "award-category") {
     setPage("sa-batch");
   }
   if (!SHOW_ACTIVITY_LOG && page === "activity") {
     setPage("students");
+  }
+  if (!SHOW_JOB_MANAGEMENT && page === "jobs") {
+    setPage("events");
   }
   const [masterOpen, setMasterOpen] = useCanvasState("masterOpen", true);
   const [announceOpen, setAnnounceOpen] = useCanvasState("announceOpen", true);
@@ -4751,7 +4897,7 @@ export default function StudentManagementPortal() {
     false,
   );
 
-  const [students, setStudents] = useCanvasState<Student[]>("saStudents6", SEED_STUDENTS);
+  const [students, setStudents] = useCanvasState<Student[]>("saStudents8", SEED_STUDENTS);
   const [schools, setSchools] = useCanvasState<School[]>("saSchools3", SEED_SCHOOLS);
   const [events, setEvents] = useCanvasState<EventRec[]>("events3", SEED_EVENTS);
   const [volunteers, setVolunteers] = useCanvasState<Volunteer[]>(
@@ -4759,18 +4905,21 @@ export default function StudentManagementPortal() {
     SEED_VOLUNTEERS,
   );
   const [jobs, setJobs] = useCanvasState<Job[]>("jobs4", SEED_JOBS);
-  const [joins, setJoins] = useCanvasState<JoinRecord[]>("joins3", SEED_JOINS);
+  const [joins, setJoins] = useCanvasState<JoinRecord[]>("joins5", SEED_JOINS);
   const [candidates] = useCanvasState<JobCandidate[]>(
-    "candidates3",
+    "candidates5",
     SEED_CANDIDATES,
   );
-  const [kpis, setKpis] = useCanvasState<KpiRow[]>("kpis", SEED_KPI);
-  const [fame, setFame] = useCanvasState<Fame[]>("fame", SEED_FAME);
-  const [certs, setCerts] = useCanvasState<CertPack[]>("certPacks", SEED_CERTS);
+  const [kpis, setKpis] = useCanvasState<KpiRow[]>("kpis3", SEED_KPI);
+  const [fame, setFame] = useCanvasState<Fame[]>("fame3", SEED_FAME);
+  const [certs, setCerts] = useCanvasState<CertPack[]>("certPacks3", SEED_CERTS);
   const [banners, setBanners] = useCanvasState<Banner[]>("banners6", SEED_BANNERS);
   const [logs] = useCanvasState<ActivityLog[]>("activityLogs", SEED_ACTIVITY);
   const [batches, setBatches] = useCanvasState<MasterItem[]>("batches", SEED_BATCHES);
-  const [regions] = useCanvasState<MasterItem[]>("regions", SEED_REGIONS);
+  const [regions, setRegions] = useCanvasState<MasterItem[]>(
+    "regions4",
+    SEED_REGIONS,
+  );
   const [certCats, setCertCats] = useCanvasState<MasterItem[]>(
     "certCats",
     SEED_CERT_CATS,
@@ -4784,7 +4933,9 @@ export default function StudentManagementPortal() {
     { value: "All", label: "All batches" },
     ...batches.map((b) => ({ value: b.name, label: b.name })),
   ];
-  const regionSelect = regions.map((r) => ({ value: r.name, label: r.name }));
+  const regionSelect = regions
+    .filter((r) => r.status === "Active")
+    .map((r) => ({ value: r.name, label: r.name }));
   const batchSelect = batches.map((b) => ({ value: b.name, label: b.name }));
   const collegeSelect = schools.map((s) => ({ value: s.college, label: s.college }));
   const collegeOpts = [
@@ -4859,16 +5010,18 @@ export default function StudentManagementPortal() {
 
   function openAddStudent() {
     setMenuId("");
+    const region = regions[0]?.name || "Yangon";
+    const batch = batches.find((b) => b.status === "Active")?.name || "Batch 6";
     openAdd({
-      studentId: nextStudentId(students),
+      studentId: nextStudentId(students, region, batch, regions, batches),
       name: "",
       college: schools[0]?.college || "",
-      region: regions[0]?.name || "Yangon",
+      region,
       township: "",
       city: "",
       currentAddress: "",
       permanentAddress: "",
-      batch: batches.find((b) => b.status === "Active")?.name || "Batch 6",
+      batch,
       gender: "Female",
       age: "",
       dob: "",
@@ -5452,6 +5605,7 @@ export default function StudentManagementPortal() {
       extraLabel: string;
       items: MasterItem[];
       setItems: (rows: MasterItem[]) => void;
+      kind: "default" | "region";
     }
   > = {
     "sa-batch": {
@@ -5460,6 +5614,15 @@ export default function StudentManagementPortal() {
       extraLabel: "Year",
       items: batches,
       setItems: setBatches,
+      kind: "default",
+    },
+    "training-region": {
+      title: "Training Region",
+      body: "Manage training regions and region codes used for SA ID generation and student records.",
+      extraLabel: "Training Region Code",
+      items: regions,
+      setItems: setRegions,
+      kind: "region",
     },
     "certificate-category": {
       title: "Certificate Category",
@@ -5467,6 +5630,7 @@ export default function StudentManagementPortal() {
       extraLabel: "Notes",
       items: certCats,
       setItems: setCertCats,
+      kind: "default",
     },
   };
 
@@ -5474,7 +5638,12 @@ export default function StudentManagementPortal() {
   const master = isMaster ? masterMeta[page] : null;
   const masterFiltered = master
     ? master.items.filter((item) =>
-        q ? matches(`${item.name} ${item.extra} ${item.status}`, q) : true,
+        q
+          ? matches(
+              `${item.name} ${item.extra} ${item.description || ""} ${item.status}`,
+              q,
+            )
+          : true,
       )
     : [];
 
@@ -5672,6 +5841,15 @@ export default function StudentManagementPortal() {
       ];
     }
     if (master) {
+      if (master.kind === "region") {
+        return [
+          ["Training Region Code", form.extra],
+          ["Training Region Name", form.name],
+          ["Description", form.description],
+          ["Status", form.status],
+          ...auditPairs(form),
+        ];
+      }
       return [
         ["Name", form.name],
         [master.extraLabel, form.extra],
@@ -5745,9 +5923,17 @@ export default function StudentManagementPortal() {
             border-color: #002c76 !important;
           }
           .sa-light main div.sa-primary-btn, .sa-modal div.sa-primary-btn {
-            color: ${WHITE} !important;
-            -webkit-text-fill-color: ${WHITE} !important;
-            background: #002c76 !important;
+            color: ${VIRYA.textOnFill} !important;
+            -webkit-text-fill-color: ${VIRYA.textOnFill} !important;
+            background: ${VIRYA.primary} !important;
+          }
+          .sa-light main div.sa-primary-btn:hover, .sa-modal div.sa-primary-btn:hover {
+            background: ${VIRYA.primaryHover} !important;
+          }
+          .sa-nav-item:hover:not(.sa-nav-active) {
+            background: ${VIRYA.menuHover} !important;
+            color: ${VIRYA.primary} !important;
+            -webkit-text-fill-color: ${VIRYA.primary} !important;
           }
           .sa-light table, .sa-light th, .sa-light td,
           .sa-modal table, .sa-modal th, .sa-modal td {
@@ -5776,9 +5962,9 @@ export default function StudentManagementPortal() {
           .sa-modal tbody tr.sa-cert-error td,
           .sa-light tbody tr.sa-cert-error:nth-child(even) td,
           .sa-modal tbody tr.sa-cert-error:nth-child(even) td {
-            background-color: #FDECEC !important;
-            color: #C62828 !important;
-            -webkit-text-fill-color: #C62828 !important;
+            background-color: #fde8e8 !important;
+            color: ${VIRYA.secondary} !important;
+            -webkit-text-fill-color: ${VIRYA.secondary} !important;
           }
           .sa-light input, .sa-light select, .sa-light textarea,
           .sa-modal input, .sa-modal select, .sa-modal textarea {
@@ -5841,9 +6027,9 @@ export default function StudentManagementPortal() {
             background: ${BRAND} !important;
           }
           .sa-light main div.sa-chip-delete, .sa-modal div.sa-chip-delete {
-            color: #C62828 !important;
-            -webkit-text-fill-color: #C62828 !important;
-            background: #FDECEC !important;
+            color: ${VIRYA.secondary} !important;
+            -webkit-text-fill-color: ${VIRYA.secondary} !important;
+            background: #fde8e8 !important;
           }
           .sa-light main div.sa-status-on, .sa-modal div.sa-status-on {
             color: ${BRAND} !important;
@@ -5853,12 +6039,12 @@ export default function StudentManagementPortal() {
           .sa-light main div.sa-status-off, .sa-modal div.sa-status-off {
             color: ${MUTED} !important;
             -webkit-text-fill-color: ${MUTED} !important;
-            background: #F3F4F6 !important;
+            background: ${VIRYA.disabledBg} !important;
           }
           .sa-light main div.sa-status-block, .sa-modal div.sa-status-block {
-            color: #C62828 !important;
-            -webkit-text-fill-color: #C62828 !important;
-            background: #FDECEC !important;
+            color: ${VIRYA.secondary} !important;
+            -webkit-text-fill-color: ${VIRYA.secondary} !important;
+            background: #fde8e8 !important;
           }
           .sa-light main thead th:last-child {
             position: sticky;
@@ -6198,7 +6384,7 @@ export default function StudentManagementPortal() {
                 {detailTitle}
               </H1>
               <Text size="small" style={{ color: MUTED, fontFamily: FONT }}>
-                KBZPay SA &gt; {master ? "Master Setup" : ANNOUNCE_NAV.some((item) => item.id === page) ? "Announcement" : "Program"} &gt; Details
+                KBZPay SA / {master ? "Master Setup" : ANNOUNCE_NAV.some((item) => item.id === page) ? "Announcement" : "Program"} / Details
               </Text>
               {page === "students" ? (
                 <div
@@ -7943,7 +8129,16 @@ export default function StudentManagementPortal() {
                 actions={
                   <BrandButton
                     onClick={() =>
-                      openAdd({ name: "", extra: "", status: "Active" })
+                      openAdd(
+                        master.kind === "region"
+                          ? {
+                              name: "",
+                              extra: "",
+                              description: "",
+                              status: "Active",
+                            }
+                          : { name: "", extra: "", status: "Active" },
+                      )
                     }
                   >
                     Add
@@ -7962,22 +8157,60 @@ export default function StudentManagementPortal() {
                 stickyHeader
                 striped
                 framed={false}
-                headers={["Name", master.extraLabel, "Status", "Action"]}
-                rows={masterFiltered.map((item) => [
-                  item.name,
-                  item.extra,
-                  <StatusMark key={`${item.id}-st`} value={item.status} />,
-                  <ViewDetailsBtn
-                    key={`${item.id}-a`}
-                    onClick={() =>
-                      openDetails(item.id, {
-                        name: item.name,
-                        extra: item.extra,
-                        status: item.status,
-                      })
-                    }
-                  />,
-                ])}
+                headers={
+                  master.kind === "region"
+                    ? [
+                        "Training Region Code",
+                        "Training Region Name",
+                        "Description",
+                        "Status",
+                        "Action",
+                      ]
+                    : ["Name", master.extraLabel, "Status", "Action"]
+                }
+                rows={masterFiltered.map((item) =>
+                  master.kind === "region"
+                    ? [
+                        item.extra,
+                        item.name,
+                        item.description || "—",
+                        <StatusMark key={`${item.id}-st`} value={item.status} />,
+                        <ViewDetailsBtn
+                          key={`${item.id}-a`}
+                          onClick={() =>
+                            openDetails(item.id, {
+                              name: item.name,
+                              extra: item.extra,
+                              description: item.description || "",
+                              status: item.status,
+                              createdAt: item.createdAt || "",
+                              createdBy: item.createdBy || "",
+                              updatedAt: item.updatedAt || "",
+                              updatedBy: item.updatedBy || "",
+                            })
+                          }
+                        />,
+                      ]
+                    : [
+                        item.name,
+                        item.extra,
+                        <StatusMark key={`${item.id}-st`} value={item.status} />,
+                        <ViewDetailsBtn
+                          key={`${item.id}-a`}
+                          onClick={() =>
+                            openDetails(item.id, {
+                              name: item.name,
+                              extra: item.extra,
+                              status: item.status,
+                              createdAt: item.createdAt || "",
+                              createdBy: item.createdBy || "",
+                              updatedAt: item.updatedAt || "",
+                              updatedBy: item.updatedBy || "",
+                            })
+                          }
+                        />,
+                      ],
+                )}
                 emptyMessage="No matching records"
               />
               <TablePager total={masterFiltered.length} />
@@ -8057,7 +8290,12 @@ export default function StudentManagementPortal() {
             <BrandButton
               disabled={!form.file || !form.importText}
               onClick={() => {
-                const result = importStudentRows(form.importText || "", students);
+                const result = importStudentRows(
+                  form.importText || "",
+                  students,
+                  regions,
+                  batches,
+                );
                 if (result.accepted.length > 0) {
                   setStudents([...result.accepted, ...students]);
                 }
@@ -8085,7 +8323,7 @@ export default function StudentManagementPortal() {
             </Text>
             <TemplateButton
               filename="SA_Student_Update_Template.csv"
-              csv={STUDENT_TEMPLATE}
+              csv={STUDENT_UPDATE_TEMPLATE}
             />
             <div
               style={{
@@ -8099,13 +8337,7 @@ export default function StudentManagementPortal() {
                 <Text size="small" weight="medium" style={{ fontFamily: FONT }}>
                   Validation notes
                 </Text>
-                {[
-                  "Only Excel files are supported.",
-                  "SA ID must already exist in Student Record.",
-                  "Required columns must not be empty.",
-                  "Matched records will be updated.",
-                  "Unknown SA IDs appear in the result as failed.",
-                ].map((note) => (
+                {STUDENT_UPDATE_NOTES.map((note) => (
                   <Text
                     key={note}
                     size="small"
@@ -8265,10 +8497,11 @@ export default function StudentManagementPortal() {
               </Row>
             <Grid columns={2} gap={12}>
               <Field label="SA ID">
-                <TextInput
-                  value={form.studentId || ""}
-                  onChange={(v) => setField("studentId", v)}
-                />
+                <LockedValue value={form.studentId || "—"} />
+                <Text size="small" style={{ color: MUTED, fontFamily: FONT }}>
+                  System-generated: region code + batch year + serial (e.g.
+                  SA-001260001)
+                </Text>
               </Field>
               <Field label="Student Name">
                 <TextInput
@@ -8286,7 +8519,23 @@ export default function StudentManagementPortal() {
               <Field label="Training Region">
                 <Select
                   value={form.region || ""}
-                  onChange={(v) => setField("region", v)}
+                  onChange={(v) => {
+                    if (modal === "edit") {
+                      setField("region", v);
+                      return;
+                    }
+                    setForm({
+                      ...form,
+                      region: v,
+                      studentId: nextStudentId(
+                        students,
+                        v,
+                        form.batch || "",
+                        regions,
+                        batches,
+                      ),
+                    });
+                  }}
                   options={regionSelect}
                 />
               </Field>
@@ -8305,7 +8554,23 @@ export default function StudentManagementPortal() {
               <Field label="SA Batch">
                 <Select
                   value={form.batch || ""}
-                  onChange={(v) => setField("batch", v)}
+                  onChange={(v) => {
+                    if (modal === "edit") {
+                      setField("batch", v);
+                      return;
+                    }
+                    setForm({
+                      ...form,
+                      batch: v,
+                      studentId: nextStudentId(
+                        students,
+                        form.region || "",
+                        v,
+                        regions,
+                        batches,
+                      ),
+                    });
+                  }}
                   options={batchSelect}
                 />
               </Field>
@@ -8513,7 +8778,18 @@ export default function StudentManagementPortal() {
                 onClick={() => {
                   const row: Student = {
                     id: modal === "edit" ? editId : uid("s"),
-                    studentId: form.studentId || nextStudentId(students),
+                    studentId:
+                      modal === "edit"
+                        ? form.studentId ||
+                          students.find((s) => s.id === editId)?.studentId ||
+                          ""
+                        : nextStudentId(
+                            students,
+                            form.region || "",
+                            form.batch || "",
+                            regions,
+                            batches,
+                          ),
                     name: form.name || "New Ambassador",
                     college: form.college || "",
                     region: form.region || "",
@@ -9465,7 +9741,7 @@ export default function StudentManagementPortal() {
               onClick={() => {
                 setKpis(
                   kpis.map((k) =>
-                    k.studentId === "SA-2026-004"
+                    k.studentId === "SA-001260003"
                       ? { ...k, attendance: 90, operation: 86, total: 86 }
                       : k,
                   ),
@@ -9511,7 +9787,7 @@ export default function StudentManagementPortal() {
               onClick={() => {
                 setKpis(
                   kpis.map((k) =>
-                    k.studentId === "SA-2026-001"
+                    k.studentId === "SA-001260001"
                       ? {
                           ...k,
                           attendance: 97,
@@ -10272,27 +10548,59 @@ export default function StudentManagementPortal() {
           title={modal === "edit" ? `Edit ${master.title}` : `Add ${master.title}`}
           onClose={closeModal}
         >
-          <Grid columns={2} gap={12}>
-            <Field label="Name">
-              <TextInput
-                value={form.name || ""}
-                onChange={(v) => setField("name", v)}
-              />
-            </Field>
-            <Field label={master.extraLabel}>
-              <TextInput
-                value={form.extra || ""}
-                onChange={(v) => setField("extra", v)}
-              />
-            </Field>
-            <Field label="Status">
-              <Select
-                value={form.status || "Active"}
-                onChange={(v) => setField("status", v)}
-                options={STATUS_OPTS}
-              />
-            </Field>
-          </Grid>
+          {master.kind === "region" ? (
+            <Grid columns={2} gap={12}>
+              <Field label="Training Region Code">
+                <TextInput
+                  value={form.extra || ""}
+                  onChange={(v) => setField("extra", v)}
+                  placeholder="e.g. 001"
+                />
+              </Field>
+              <Field label="Training Region Name">
+                <TextInput
+                  value={form.name || ""}
+                  onChange={(v) => setField("name", v)}
+                  placeholder="e.g. Yangon"
+                />
+              </Field>
+              <Field label="Description">
+                <TextInput
+                  value={form.description || ""}
+                  onChange={(v) => setField("description", v)}
+                />
+              </Field>
+              <Field label="Status">
+                <Select
+                  value={form.status || "Active"}
+                  onChange={(v) => setField("status", v)}
+                  options={STATUS_OPTS}
+                />
+              </Field>
+            </Grid>
+          ) : (
+            <Grid columns={2} gap={12}>
+              <Field label="Name">
+                <TextInput
+                  value={form.name || ""}
+                  onChange={(v) => setField("name", v)}
+                />
+              </Field>
+              <Field label={master.extraLabel}>
+                <TextInput
+                  value={form.extra || ""}
+                  onChange={(v) => setField("extra", v)}
+                />
+              </Field>
+              <Field label="Status">
+                <Select
+                  value={form.status || "Active"}
+                  onChange={(v) => setField("status", v)}
+                  options={STATUS_OPTS}
+                />
+              </Field>
+            </Grid>
+          )}
           <Row>
             <Spacer />
             <Button variant="ghost" onClick={closeModal}>
@@ -10300,11 +10608,33 @@ export default function StudentManagementPortal() {
             </Button>
             <BrandButton
               onClick={() => {
+                const existing = master.items.find((i) => i.id === editId);
+                const audit = stampAudit(
+                  {
+                    createdAt: form.createdAt || existing?.createdAt || "",
+                    createdBy: form.createdBy || existing?.createdBy || "",
+                    updatedAt: form.updatedAt || existing?.updatedAt || "",
+                    updatedBy: form.updatedBy || existing?.updatedBy || "",
+                  },
+                  modal === "edit",
+                );
                 const row: MasterItem = {
                   id: modal === "edit" ? editId : uid("m"),
                   name: form.name || "New item",
-                  extra: form.extra || "",
+                  extra:
+                    master.kind === "region"
+                      ? (form.extra || "")
+                          .replace(/\D/g, "")
+                          .padStart(3, "0")
+                          .slice(-3)
+                      : form.extra || "",
                   status: form.status || "Active",
+                  ...(master.kind === "region"
+                    ? { description: form.description || "" }
+                    : existing?.description
+                      ? { description: existing.description }
+                      : {}),
+                  ...audit,
                 };
                 master.setItems(
                   modal === "edit"
